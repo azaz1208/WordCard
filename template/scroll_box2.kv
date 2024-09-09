@@ -1,0 +1,111 @@
+<MyCardLayout@MDBoxLayout>:
+    id: card_layout
+    size_hint_y: None
+    height: 75
+    canvas.before:
+        Color:
+            rgba: (3/255, 138/255, 255/255, 1)  # Azure Radiance color background
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDFlatButton:
+        orientation: 'vertical'  # Change to vertical
+        size_hint: 1, 1
+        on_press: app.on_wordcard_label_press(root.card_id)  # Pass ID to function
+        padding: '20dp'
+        MDLabel:
+            text: root.text
+            font_size: 32
+            font_name: "MSJH"
+
+<OrgCardLayout@MDBoxLayout>:
+    id: card_layout
+    size_hint_y: None
+    height: 75
+    canvas.before:
+        Color:
+            rgba: (3/255, 138/255, 255/255, 1)  # Azure Radiance color background
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDFlatButton:
+        # orientation: 'vertical'  # Change to vertical
+        size_hint: 1, 1
+        on_press: app.show_addWordCard_dialog()
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 1
+            spacing: "12dp"  # 圖標與文字之間的間距
+            padding: "12dp"
+            MDIcon:
+                icon: "plus-circle"  # 圖標名稱，可以更改成你想要的圖標
+                size_hint: None, None
+                size: "36dp", "36dp"  # 調整圖標大小
+                font_size: "36dp"  # 調整圖標的字體大小，使圖標變大
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1  # 圖標顏色（可選）
+                pos_hint: {'x': 0.5, 'center_y': 0.5}
+            MDLabel:
+                text: root.text
+                font_size: 32
+                font_name: "MSJH"
+                # halign: 'left'  # 文字左對齊
+
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "300dp"
+
+    MDTextField:
+        id: word_input
+        hint_text: "Word"
+        font_name: "MSJH"
+
+    MDTextField:
+        id: meaning_input
+        hint_text: "Meaning"
+        multiline: True
+        max_height: "150dp"
+        font_name: "MSJH"
+
+    MDTextField:
+        id: sentence_input
+        hint_text: "Sentence"
+        multiline: True
+        max_height: "200dp"
+        font_name: "MSJH"
+
+# ====== Main app layout ======
+MDBoxLayout:
+    orientation: 'vertical'
+    size: root.width, root.height
+
+    # Scrollable area
+    MDBoxLayout:
+        ScrollView:
+            MDBoxLayout:
+                id: word_card_area
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: '20dp'
+                padding: '20dp'
+
+                # word boxes
+                OrgCardLayout:
+                    text: "add new word"
+                    # text: ""
+                # MyCardLayout:
+                #     text: "cool 2!"
+    
+    MDBoxLayout:
+        size_hint_y: .16
+        Button:
+            text: 'Add Card'
+            # on_release: app.add_card()
+            on_release: app.show_addWordCard_dialog()
+        Button:
+            text: 'Cards'
+            # on_press: app.add_card()
+            # on_release: app.show_dialog()

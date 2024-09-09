@@ -1,0 +1,51 @@
+<WordCard_layout@MDBoxLayout>:
+    height: 150
+    size_hint_y: None
+    canvas.before:
+        Color:
+            rgba: (107, 43, 170, 0.8)  # 紅色背景 (R, G, B, A)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDFlatButton:
+        size_hint: 1, 1
+        on_release: app.wc_pressed()
+        MDLabel:
+            text: root.text
+            halign: 'center'  # 水平居中
+            valign: 'center'  # 垂直居中
+
+#====== Main app layout ======
+MDBoxLayout:
+    orientation: 'vertical'
+    size: root.width, root.height
+
+    # Scrollable area
+    MDBoxLayout:
+        ScrollView:
+            MDBoxLayout:
+                id: wordCard_area
+                orientation: 'vertical'
+                height: self.minimum_height
+                size_hint_y: None
+                spacing: 20
+                padding: 20
+                WordCard_layout:
+                    text:"word1"
+                WordCard_layout:
+                    text: "new"
+                WordCard_layout:
+                    text: "new 2"
+                WordCard_layout:
+                    text: "new 3"
+
+    # Bottom Btns
+    MDBoxLayout:
+        size_hint_y: 0.16
+        Button:
+            text: 'Add Word'
+            # on_release: app.press()
+            on_release: app.show_add_card_dialog()
+        Button:
+            text: 'Exit'
+            on_press: app.press()
