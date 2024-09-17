@@ -3,18 +3,37 @@
     size_hint_y: None
     canvas.before:
         Color:
-            rgba: (107, 43, 170, 0.8)  # 紅色背景 (R, G, B, A)
+            rgba: (107/255, 43/255, 170/255, 1)  # 紅色背景 (R, G, B, A)
         Rectangle:
             size: self.size
             pos: self.pos
     MDFlatButton:
         size_hint: 1, 1
-        on_release: app.wc_pressed()
         MDLabel:
             text: root.text
             halign: 'center'  # 水平居中
             valign: 'center'  # 垂直居中
-
+<AddCardDialog_content@MDBoxLayout>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "300dp"
+    MDTextField:
+        id: word_input
+        hint_text: "Word"
+        
+    MDTextField:
+        id: meaning_input
+        hint_text: "Meaning"
+        multiline: True
+        max_height: "150dp"
+        font_name: "MSJH"
+    MDTextField:
+        id: sentence_input
+        hint_text: "Sentence"
+        multiline: True
+        max_height: "200dp"
+        font_name: "MSJH"
 #====== Main app layout ======
 MDBoxLayout:
     orientation: 'vertical'
@@ -44,8 +63,6 @@ MDBoxLayout:
         size_hint_y: 0.16
         Button:
             text: 'Add Word'
-            # on_release: app.press()
             on_release: app.show_add_card_dialog()
         Button:
             text: 'Exit'
-            on_press: app.press()
