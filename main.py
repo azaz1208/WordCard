@@ -5,6 +5,7 @@ from kivy.properties import StringProperty
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.label import MDLabel
 from kivy.core.text import LabelBase
 import uuid
 
@@ -74,6 +75,7 @@ class MainApp(MDApp):
             ]
         )
         self.dialog.open()
+    
     def getTextInput(self, *args):
         word = self.dialog.content_cls.ids.word_input.text
         meaning = self.dialog.content_cls.ids.meaning_input.text
@@ -89,7 +91,75 @@ class MainApp(MDApp):
         
         print(data)
         return data
+    
+    def on_wordCard_label_press(self, card_id):
+        # get card data based on card_id
+        card_data = self.sum_dict.get(card_id, {})
+
+        # get word as title
+        # word = card_data.get("word", "unknown word")
+
+        self.dialog = MDDialog(
+            # title = word,
+            type = "custom",
+            content_cls = self.create_card_detail_content(card_data),
+            text = f'Meaning: {card_data.get("meaning", "NA")}\n\nsentence: {card_data.get("sentence", "NA")}',
+            buttons = [
+                MDFlatButton(
+                    text = "Last",
+                    on_release = self.close_dialog
+                ),
+                MDFlatButton(
+                    text = "Next",
+                    on_release = self.close_dialog
+                ),
+                MDFlatButton(
+                    text = "Edit",
+                    on_release = self.close_dialog
+                ),
+                MDFlatButton(
+                    text = "Close",
+                    on_release = self.close_dialog
+                ),
+            ],
+        )
+
+        self.dialog.open()
+
+    def create_card_detail_content(self,card_data):
+        content = MDBoxLayout(orientation ='vertical',spacing = "12dp",padding ="12dp",size_hint_y = None, height = "250dp")
+
+        title = MDLabel(
+            text = card_data.get("word","unknown word"),
+            font_style = "H2",
+            height = "80dp",
+            halign = "center",
+            theme_text_color="Custom",
+            text_color=(0, 128/255, 255/255, 1),
+        )
+        content.add_widget(title)
         
+        meaning = MDLabel(
+            text = card_data.get("meaning",""),
+            font_style = "H5",
+            height = "48dp",
+            theme_text_color="Custom",
+            text_color=(1,1,1,1),
+        )
+        content.add_widget(meaning)
+
+        sentence = MDLabel(
+            text = card_data.get("sentence",""),
+            font_style = "H5",
+            height = "36dp",
+            theme_text_color="Custom",
+            text_color=(1,1,1,1),
+        )
+        content.add_widget(sentence)
+
+        return content
+
+
 
 if __name__ == '__main__':
     MainApp().run() 

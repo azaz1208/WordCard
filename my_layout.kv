@@ -9,6 +9,7 @@
             pos: self.pos
     MDFlatButton:
         size_hint: 1, 1
+        on_release: app.on_wordCard_label_press(root.card_id)
         MDLabel:
             text: root.text
             halign: 'center'  # 水平居中
