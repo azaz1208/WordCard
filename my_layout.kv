@@ -3,7 +3,7 @@
     size_hint_y: None
     canvas.before:
         Color:
-            rgba: (107/255, 43/255, 170/255, 1)  # 紅色背景 (R, G, B, A)
+            rgba: (65/255, 105/255, 225/255, 1)  # 紅色背景 (R, G, B, A)
         Rectangle:
             size: self.size
             pos: self.pos
@@ -14,6 +14,34 @@
             text: root.text
             halign: 'center'  # 水平居中
             valign: 'center'  # 垂直居中
+<Plus_WordCard_layout@MDBoxLayout>:
+    height: 150
+    size_hint_y: None
+    canvas.before:
+        Color:
+            rgba: (65/255, 105/255, 225/255, 1)  # 紅色背景 (R, G, B, A)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDFlatButton:
+        size_hint: 1, 1
+        on_release: app.show_add_card_dialog()
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 1
+            spacing: "12dp"  # 圖標與文字之間的間距
+            padding: "12dp"
+            MDIcon:
+                icon: "pen-plus"  # 圖標名稱，可以更改成你想要的圖標
+                size_hint: None, None
+                size: "36dp", "36dp"  # 調整圖標大小
+                font_size: "36dp"  # 調整圖標的字體大小，使圖標變大
+                pos_hint: {'x': 0.5, 'center_y': 0.5}
+                theme_text_color: "Custom"
+            MDLabel:
+                text: root.text
+                font_size: 48
+
 <AddCardDialog_content@MDBoxLayout>
     orientation: "vertical"
     spacing: "12dp"
@@ -35,6 +63,7 @@
         multiline: True
         max_height: "200dp"
         font_name: "MSJH"
+
 #====== Main app layout ======
 MDBoxLayout:
     orientation: 'vertical'
@@ -50,14 +79,14 @@ MDBoxLayout:
                 size_hint_y: None
                 spacing: 20
                 padding: 20
-                WordCard_layout:
-                    text:"word1"
-                WordCard_layout:
-                    text: "new"
-                WordCard_layout:
-                    text: "new 2"
-                WordCard_layout:
-                    text: "new 3"
+                Plus_WordCard_layout:
+                    text:"Add New Card"
+                # WordCard_layout:
+                #     text: "new"
+                # WordCard_layout:
+                #     text: "new 2"
+                # WordCard_layout:
+                #     text: "new 3"
 
     # Bottom Btns
     MDBoxLayout:
